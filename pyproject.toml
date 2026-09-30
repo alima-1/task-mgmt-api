@@ -1,0 +1,33 @@
+[project]
+name = "task-mgmt-api"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Alima",email = "alima.ayikoru@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi (>=0.141.1,<0.142.0)",
+    "uvicorn (>=0.53.0,<0.54.0)",
+    "starlette (>=1.6.0,<2.0.0)",
+    "anyio (>=4.15.1,<5.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "alembic (>=1.20.0,<2.0.0)",
+    "sqlalchemy (>=2.0.54,<3.0.0)",
+    "asyncpg (>=0.31.0,<0.32.0)",
+    "dotenv (>=0.9.9,<0.10.0)"
+]
+
+[tool.poetry]
+packages = [{include = "task_mgmt_api", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.1.1,<10.0.0)",
+    "httpx2 (>=2.13.0,<3.0.0)",
+]
