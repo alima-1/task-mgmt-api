@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from sqlalchemy import Date, DateTime, Text, func
+from sqlalchemy import Date, DateTime, Text, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.task_mgmt_api.database import Base
@@ -8,6 +8,9 @@ from src.task_mgmt_api.database import Base
 
 class Task(Base):
     __tablename__ = "tasks"
+    __table_args__ = (
+        UniqueConstraint("name", "due_date", name="uq_task_name_due_date"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(nullable=False)
