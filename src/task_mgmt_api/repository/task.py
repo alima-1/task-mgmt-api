@@ -1,5 +1,5 @@
 import datetime
-from select import select
+from sqlalchemy import select
 
 from src.task_mgmt_api.model.task import Task
 from src.task_mgmt_api.schema.tasks import TaskCreate
