@@ -11,7 +11,7 @@ from src.task_mgmt_api.services.task import validate_due_date, check_task_unique
 router = APIRouter(prefix="/v1/tasks", tags=["tasks"])
 
 
-@router.post("", response_model=TaskResponse)
+@router.post("", response_model=TaskResponse, status_code=status.HTTP_201_CREATED)
 async def create_task(task: TaskCreate, session: AsyncSession = Depends(get_session)):
     try:
         if task.due_date is not None:
@@ -20,6 +20,6 @@ async def create_task(task: TaskCreate, session: AsyncSession = Depends(get_sess
         return await create_task_repo(task, session)
     except ValueError as ve:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail={"message": str(ve)},
         ) from ve
