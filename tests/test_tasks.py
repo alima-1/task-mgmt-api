@@ -1,6 +1,6 @@
-import os
-import pytest
 from datetime import date, timedelta
+
+import pytest
 
 
 @pytest.mark.asyncio
@@ -22,6 +22,7 @@ async def test_create_task_returns_created_task(client):
     assert data["due_date"] == (date.today() + timedelta(days=1)).isoformat()
     assert data["id"] == 1
     assert "created_at" in data
+
 
 @pytest.mark.asyncio
 async def test_create_task_rejects_past_due_date(client):
@@ -52,7 +53,10 @@ async def test_create_task_rejects_duplicate_name_and_due_date(client):
 
     assert first_response.status_code == 201
     assert second_response.status_code == 422
-    assert second_response.json()["detail"]["message"] == "Task with the same name and due date already exists"
+    assert (
+        second_response.json()["detail"]["message"]
+        == "Task with the same name and due date already exists"
+    )
 
 
 @pytest.mark.asyncio

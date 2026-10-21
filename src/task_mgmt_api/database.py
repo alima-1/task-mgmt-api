@@ -1,17 +1,16 @@
-from contextlib import asynccontextmanager
-
-from fastapi import FastAPI
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 import os
-from sqlalchemy import URL
 from collections.abc import AsyncGenerator
-from sqlalchemy.orm import DeclarativeBase
+
 from dotenv import load_dotenv
+from sqlalchemy import URL
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.orm import DeclarativeBase
 
 load_dotenv()
 
+
 class Base(DeclarativeBase):
-    pass    
+    pass
 
 
 def _get_db_credentials():
@@ -22,11 +21,16 @@ def _get_db_credentials():
     db = os.getenv("DB_NAME")
     drivername = os.getenv("DB_DRIVER")
     if not user or not pwd:
-        raise RuntimeError("Database credentials not set. Set DB_USER and DB_PASSWORD environment variables.")
+        raise RuntimeError(
+            "Database credentials not set. Set DB_USER and DB_PASSWORD "
+            "environment variables."
+        )
     return user, pwd, host, port, db, drivername
+
 
 engine = None
 async_session_factory = None
+
 
 def init_db():
     global engine, async_session_factory

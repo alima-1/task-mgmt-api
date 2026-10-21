@@ -1,18 +1,17 @@
 import asyncio
+import os
 from logging.config import fileConfig
 
-from sqlalchemy import pool, URL
+from dotenv import load_dotenv
+from sqlalchemy import URL, pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-from dotenv import load_dotenv
-import src.task_mgmt_api.model  # Import the model package so all model modules are registered
-
 from src.task_mgmt_api.database import Base
-import os 
 
-#Automatically import all modules in the model package to ensure all models are registered
+# Automatically import all modules in the model package to ensure all models
+# are registered
 
 load_dotenv()
 
@@ -30,15 +29,17 @@ DATABASE_URL = URL.create(
     password=password,
     host=host,
     port=port,
-    database=db
+    database=db,
 )
 
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option("sqlalchemy.url",
-                        DATABASE_URL.render_as_string(hide_password=False).replace("%", "%%"))
+config.set_main_option(
+    "sqlalchemy.url",
+    DATABASE_URL.render_as_string(hide_password=False).replace("%", "%%"),
+)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
