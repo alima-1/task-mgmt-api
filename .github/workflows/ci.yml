@@ -63,3 +63,6 @@ jobs:
 
       - name: Run tests
         run: poetry run pytest -q
+
+      - name: Build Docker image
+        run: docker build -t task-mgmt-api .   
