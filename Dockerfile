@@ -12,6 +12,8 @@ RUN poetry config virtualenvs.create false \
 
 COPY src ./src
 
-EXPOSE 8000
+ENV PYTHONPATH=/app/src
 
-CMD ["uvicorn", "task_mgmt_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 8000
+ 
+CMD ["sh", "-c", "uvicorn task_mgmt_api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
