@@ -17,7 +17,7 @@ def _get_db_credentials():
     user = os.getenv("DB_USER")
     pwd = os.getenv("DB_PASSWORD")
     host = os.getenv("DB_HOST")
-    port = int(os.getenv("DB_PORT"))
+    port = int(os.getenv("DB_PORT", "5432"))
     db = os.getenv("DB_NAME")
     drivername = os.getenv("DB_DRIVER")
     if not user or not pwd:
@@ -27,6 +27,9 @@ def _get_db_credentials():
         )
     return user, pwd, host, port, db, drivername
 
+def enable_ssl_mode():
+    mode = os.getenv("DB_SSLMODE")
+    return mode
 
 engine = None
 async_session_factory = None
@@ -43,7 +46,9 @@ def init_db():
         port=port,
         database=db,
     )
-    engine = create_async_engine(database_url, echo=True)
+    engine = create_async_engine(
+        database_url, echo=True, 
+        connect_args={"ssl":True} if enable_ssl_mode() == "require" else {})
     async_session_factory = async_sessionmaker(engine, expire_on_commit=False)
 
 
