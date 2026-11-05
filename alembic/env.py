@@ -3,7 +3,7 @@ import os
 from logging.config import fileConfig
 
 from dotenv import load_dotenv
-from sqlalchemy import URL, pool
+from sqlalchemy import URL, make_url, pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
@@ -19,7 +19,7 @@ load_dotenv()
 database_url = os.getenv("DATABASE_URL")
 
 if database_url:
-    DATABASE_URL = database_url
+    DATABASE_URL = make_url(database_url)
 else:
     drivername = os.getenv("DB_DRIVER")
     username = os.getenv("DB_USER")
