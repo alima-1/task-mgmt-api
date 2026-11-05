@@ -16,22 +16,26 @@ from src.task_mgmt_api.database import Base
 
 load_dotenv()
 
-drivername = os.getenv("DB_DRIVER")
-username = os.getenv("DB_USER")
-password = os.getenv("DB_PASSWORD")
-host = os.getenv("DB_HOST")
-port = os.getenv("DB_PORT")
-db = os.getenv("DB_NAME")
+database_url = os.getenv("DATABASE_URL")
 
+if database_url:
+    DATABASE_URL = database_url
+else:
+    drivername = os.getenv("DB_DRIVER")
+    username = os.getenv("DB_USER")
+    password = os.getenv("DB_PASSWORD")
+    host = os.getenv("DB_HOST")
+    port = os.getenv("DB_PORT")
+    db = os.getenv("DB_NAME")
 
-DATABASE_URL = URL.create(
-    drivername=drivername,
-    username=username,
-    password=password,
-    host=host,
-    port=port,
-    database=db,
-)
+    DATABASE_URL = URL.create(
+        drivername=drivername,
+        username=username,
+        password=password,
+        host=host,
+        port=port,
+        database=db,
+    )
 
 
 # this is the Alembic Config object, which provides
