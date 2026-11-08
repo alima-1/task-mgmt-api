@@ -26,3 +26,13 @@ async def get_task_by_name_and_due_date(
         select(Task).where(Task.name == name, Task.due_date == due_date)
     )
     return existing_task
+
+
+async def get_all_tasks(session: AsyncSession = Depends(get_session)):
+    tasks = await session.scalars(select(Task))
+    return tasks.all()
+
+
+async def get_task_by_id(task_id: int, session: AsyncSession = Depends(get_session)):
+    task = await session.scalar(select(Task).where(Task.id == task_id))
+    return task
