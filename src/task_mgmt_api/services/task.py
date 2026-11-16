@@ -2,7 +2,7 @@ from datetime import date
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.task_mgmt_api.repository.task import get_task_by_name_and_due_date
+from task_mgmt_api.repository.task import get_task_by_name_and_due_date
 
 
 async def check_task_uniqueness(

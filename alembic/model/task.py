@@ -3,7 +3,7 @@ from datetime import date, datetime
 from sqlalchemy import Date, DateTime, Text, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column
 
-from src.task_mgmt_api.database import Base
+from task_mgmt_api.database import Base
 
 
 class Task(Base):

@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
-from src.task_mgmt_api.database import close_db, init_db
+from task_mgmt_api.database import close_db, init_db
 
 from .router.tasks import router as tasks_router
 

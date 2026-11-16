@@ -7,8 +7,8 @@ from sqlalchemy import URL
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.pool import NullPool
 
-from src.task_mgmt_api.database import Base, get_session
-from src.task_mgmt_api.main import app
+from task_mgmt_api.database import Base, get_session
+from task_mgmt_api.main import app
 
 load_dotenv()
 TEST_DB_URL = URL.create(
