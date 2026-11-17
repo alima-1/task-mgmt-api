@@ -20,3 +20,17 @@ class TaskResponse(BaseModel):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class TaskFullUpdate(BaseModel):
+    name: str = Field(min_length=1)
+    description: str | None = None
+    due_date: date | None = None
+    completed: bool
+
+
+class TaskPartialUpdate(BaseModel):
+    name: str | None = Field(min_length=1)
+    description: str | None = None
+    due_date: date | None = None
+    completed: bool | None = None
