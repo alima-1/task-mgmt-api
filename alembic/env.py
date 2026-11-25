@@ -7,9 +7,9 @@ from sqlalchemy import URL, make_url, pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-import task_mgmt_api.model  # noqa: F401
+import src.task_mgmt_api.model  # noqa: F401
 from alembic import context
-from task_mgmt_api.database import Base
+from src.task_mgmt_api.database import Base
 
 # Automatically import all modules in the model package to ensure all models
 # are registered
