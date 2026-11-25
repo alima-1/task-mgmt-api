@@ -9,12 +9,14 @@ from task_mgmt_api.repository.task import (
     get_all_tasks,
     get_task_by_id,
 )
+from task_mgmt_api.repository.task import update_entire_task as update_entire_task_repo
 from task_mgmt_api.repository.task import (
-    update_entire_task as update_entire_task_repo,
+    update_task_partialy as update_task_partialy_repo,
 )
 from task_mgmt_api.schema.tasks import (
     TaskCreate,
     TaskFullUpdate,
+    TaskPartialUpdate,
     TaskResponse,
 )
 from task_mgmt_api.services.task import (
@@ -73,6 +75,28 @@ async def upddate_entire_task(
             validate_due_date(task.due_date)
         await check_task_uniqueness(task.name, task.due_date, session, task_id)
         updated_task = await update_entire_task_repo(task_id, task, session)
+        if not updated_task:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail={"message": "Task not found"},
+            )
+        return updated_task
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail={"message": str(ve)},
+        ) from ve
+
+
+@router.patch("/{task_id}", response_model=TaskResponse, status_code=status.HTTP_200_OK)
+async def patch_task(
+    task_id: int, task: TaskPartialUpdate, session: AsyncSession = Depends(get_session)
+):
+    try:
+        if task.due_date is not None:
+            validate_due_date(task.due_date)
+        await check_task_uniqueness(task.name, task.due_date, session, task_id)
+        updated_task = await update_task_partialy_repo(task_id, task, session)
         if not updated_task:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

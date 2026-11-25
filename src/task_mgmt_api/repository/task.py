@@ -83,10 +83,14 @@ async def update_task_partialy(
 
 
 async def delete_task(task_id: int, session: AsyncSession):
-    task = await session.get(Task, task_id)
-    if task is None:
-        return None
+    try:
+        task = await session.get(Task, task_id)
+        if task is None:
+            return None
 
-    await session.delete(task)
-    await session.commit()
-    return task
+        await session.delete(task)
+        await session.commit()
+        return task
+    except Exception:
+        await session.rollback()
+        raise
